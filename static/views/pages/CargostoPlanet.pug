@@ -1,0 +1,44 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    div(class='breadcrumb')
+        li Вантажі
+    form(id='add-form' name='add-form' class='form-inline' action='/CargoToPlanetDelivery' method='POST')
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='') Вантаж
+            select(name = 'Cargo')
+                each val, index in Cargo
+                    option= index + '. Код:' + val.code + '. Назва:' + val.name + '. Вага:' + val.weight
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='name') Планета
+            div(class='col-md-9')
+                select(name = 'Planet')
+                     each val, index in Planet
+                         option= index + '. Назва:' + val.name + '. Місткість складів:' + val.capacity + '. Маса:' + val.weight
+        div(class='form-group')
+            div(class='col-md-12')
+                button(type='submit' class='btn btn-primary') Доставити
+
+        br
+        hr
+        div.list-wrapper
+            table(id='list')
+                if CargoFinished.length === 0
+                    p Немає доставлених вантажів
+                else
+                    each val, index in CargoFinished
+                        tr
+                            td=index 
+                            td='Вантаж:' + val.Cargo.code
+                            td='Планета:' + val.Planet.name
+        hr
+        br
+block append scripts
+    script(src='/static/js/models/shop.js')
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(src='/static/js/views/shop.js')

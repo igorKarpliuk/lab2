@@ -1,0 +1,44 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    div(class='breadcrumb')
+        li Вантажі
+    form(id='add-form' name='add-form' class='form-inline' action='/CargoFromStationToStationTransfer' method='POST')
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='name') Вантаж
+            div(class='col-md-9')
+                select(name = 'CargoFinishedOnSpaceStation')
+                    each val, index in CargoFinishedOnSpaceStation 
+                        option= index + '. Код:' + val.Cargo.code + '. Назва:' + val.Cargo.name + '. Вага:' + val.Cargo.weight
+        div(class='form-group')
+            div(class='col-md-3')
+                label(for='') Космічна станція
+            select(name = 'SpaceStation')
+                each val, index in SpaceStation
+                    option= index + '. Номер:' + val.number + '. Місткість:' + val.capacity + '. Потреба:' + val.need
+        div(class='form-group')
+            div(class='col-md-12')
+                button(type='submit' class='btn btn-primary') Перевезти
+        
+        br
+        hr
+        div.list-wrapper
+            table(id='list')
+                if CargoFinished.length === 0
+                    p Немає даних
+                else
+                    each val, index in CargoFinished
+                        tr
+                            td=index 
+                            td='Вантаж:' + val.Cargo.code
+                            td='Станція:' + val.SpaceStation.number
+        hr
+        br
+block append scripts
+    script(src='/static/js/models/shop.js')
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(src='/static/js/views/shop.js')

@@ -1,0 +1,96 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+  div(class='breadcrumb')
+    li= Планети
+  form(id='add-form' name='add-form' class='form-inline' action='/createPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Назва
+      div(class='col-md-9')
+        input(id='address' name = 'name' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Місткість складів
+      div(class='col-md-9')
+        input(id='name' name='capacity' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Маса
+      div(class='col-md-9')
+        input(id='name' name='weight' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-12')
+        button(type='submit' class='btn btn-primary') Створити
+
+    br
+    hr
+    div.list-wrapper
+      table(id='list')
+        each val, index in data
+            tr
+                td= index
+                td=' Назва:' + val.name
+                td=' Місткість складів:' + val.capacity
+                td=' Маса:' + val.weight
+  br
+  h2  Редагування планети в колекції
+  form( name='Edit' class='form-inline' action='/editPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Нова назва
+      div(class='col-md-9')
+        input( name='name' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Нова місткість складів
+      div(class='col-md-9')
+        input( name='capacity' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Нова маса
+      div(class='col-md-9')
+        input( name='weight' value='' class='form-control')
+    div(class='form-group')
+      select#OueShip(name = 'index')
+        each val, index in data
+          option= index + '. Назва:' + val.name + '. Місткість складів:' + val.capacity + '. Маса:' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Редагувати
+  br
+  h2  Видалення планети з колекції
+  form( name='Edit' class='form-inline' action='/deletePlanet' method='POST')
+    div(class='form-group')
+      select(name = 'index')
+        each val, index in data
+          option= index + '. Назва:' + val.name + '. Місткість складів:' + val.capacity + '. Маса:' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Видалити
+  br
+  h2  Пошук по назві планети
+  if info
+    h3= 'З даною назвою є планета ' + info.name + ' Місткість складів:'+ info.capacity +'; Маса:' + info.weight
+  else
+    p Тут буде інформація про планету
+  form( name='Edit' class='form-inline' action='/findPlanet' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Назва
+      div(class='col-md-9')
+        input( name='name' value='' class='form-control')
+
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Знайти
+block append scripts
+  script(src='/static/js/models/shop.js')
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+  script(src='/static/js/views/shop.js')

@@ -1,0 +1,96 @@
+extends ../layout.pug
+
+block prepend styles
+  link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+  div(class='breadcrumb')
+    li= Вантажі
+  form(id='shop-add-form' name='shop-add-form' class='form-inline' action='/createCargo' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Код
+      div(class='col-md-9')
+        input(id='address' name = 'code' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Назва
+      div(class='col-md-9')
+        input(id='name' name='name' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Вага
+      div(class='col-md-9')
+        input(id='name' name='weight' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-12')
+        button(type='submit' class='btn btn-primary') Створити
+
+    br
+    hr
+    div.list-wrapper
+      table(id='shop-list')
+        each val, index in data
+            tr
+                td= index
+                td='Код:' + val.code
+                td='Назва:' + val.name
+                td='Вага:' + val.weight
+  br
+  h2  Редагування вантажу в колекції
+  form( name='Edit' class='form-inline' action='/editCargo' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Новий код
+      div(class='col-md-9')
+        input( name='code' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Нова назва
+      div(class='col-md-9')
+        input( name='name' value='' class='form-control')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Нова вага
+      div(class='col-md-9')
+        input( name='weight' value='' class='form-control')
+    div(class='form-group')
+      select#OueShip(name = 'index')
+        each val, index in data
+          option= index + '. Код:' + val.code + '. Назва:' + val.name + '. Вага:' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Редагувати
+  br
+  h2  Видалення вантажу з колекції
+  form( name='Edit' class='form-inline' action='/deleteCargo' method='POST')
+    div(class='form-group')
+      select(name = 'index')
+        each val, index in data
+          option= index + '. Код:' + val.code + '. Назва:' + val.name + '. Вага:' + val.weight
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Видалити
+  br
+  h2  Пошук по коду вантажу
+  if info
+    h3= 'З даним кодом є вантаж ' + info.code + ' Назва:' + info.name + '; Вага:' + info.weight
+  else
+    p Тут буде інформація про вантаж
+  form( name='Edit' class='form-inline' action='/findCargo' method='POST')
+    div(class='form-group')
+      div(class='col-md-3')
+        label(for='name') Код
+      div(class='col-md-9')
+        input( name='code' value='' class='form-control')
+
+
+      div(class='form-group')
+        div(class='col-md-12')
+          button(type='submit' class='btn btn-primary') Знайти
+block append scripts
+  script(src='/static/js/models/shop.js')
+  script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+  script(src='/static/js/views/shop.js')
