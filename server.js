@@ -245,6 +245,7 @@ app.post('/findCargo', (req, res)=>{
         res.render('Cargos', {info: Cargo, data: Cargos})
     } else res.redirect('/Cargos')
 });
+
 app.post('/CargoToSpaceStationDelivery', (req,res)=>{
     let body=req.body;
     console.log(body);
@@ -273,6 +274,7 @@ app.post('/CargoToSpaceStationDelivery', (req,res)=>{
         })
     }
 });
+
 app.post('/CargoToPlanetDelivery', (req,res)=>{
     let body=req.body;
     console.log(body);
@@ -302,6 +304,7 @@ app.post('/CargoToPlanetDelivery', (req,res)=>{
         })
     }
 });
+
 app.post('/CargoFromStationToStationTransfer', (req,res)=>{
     let body=req.body;
     console.log(body);
@@ -331,6 +334,7 @@ app.post('/CargoFromStationToStationTransfer', (req,res)=>{
         }
     })
 });
+
 app.post('/CargoFromPlanetToStationTransfer', (req,res)=>{
     let body=req.body;
     console.log(body);
@@ -362,6 +366,7 @@ app.post('/CargoFromPlanetToStationTransfer', (req,res)=>{
         }
     })
 });
+
 app.listen(3000, () => {
     console.log(3000)
 });
